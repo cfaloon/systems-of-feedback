@@ -1,0 +1,33 @@
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @post.user.display_avatar %>
+  <%= link_to @post.user.username, user_posts_path(username: @post.user.username) %>
+</p>
+
+<p>
+  <strong>Blog entry:</strong>
+  <%= @post.blog_entry %>
+</p>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
+
+<% @post.comments.each do |comment| %>
+  <div class="well">
+    Author:
+    <%= comment.user.display_avatar %>
+    <%= link_to comment.user.username, user_posts_path(username: comment.user.username) %>
+    <%= time_ago_in_words comment.created_at %> ago
+    <br />
+    Entry: <%= comment.comment_entry %>
+  </div>
+<% end %>
+
+<div id="comments">
+  <%= render 'comments/form', post: @post, comment: @comment %>
+</div>
